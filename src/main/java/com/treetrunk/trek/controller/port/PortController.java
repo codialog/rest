@@ -1,4 +1,4 @@
-package com.treetrunk.trek.controller;
+package com.treetrunk.trek.controller.port;
 
 import com.treetrunk.trek.exceptions.NotFoundException;
 import org.springframework.web.bind.annotation.*;
@@ -11,24 +11,20 @@ import java.util.Map;
 @RestController
 @RequestMapping("port")
 public class PortController {
-    private int counter = 5;
+    private int counter = 3;
 
     private List<Map<String, String>> ports = new ArrayList<Map<String, String>>() {{
         add(new HashMap<String, String>() {{
+            put("id", "0");
+            put("status", String.valueOf(Status.TRANSIT));
+        }});
+        add(new HashMap<String, String>() {{
             put("id", "1");
-            put("status", "ACTIVE");
+            put("status", String.valueOf(Status.NOT_ACTIVE));
         }});
         add(new HashMap<String, String>() {{
             put("id", "2");
-            put("status", "NOT_ACTIVE");
-        }});
-        add(new HashMap<String, String>() {{
-            put("id", "3");
-            put("status", "NOT_ACTIVE");
-        }});
-        add(new HashMap<String, String>() {{
-            put("id", "4");
-            put("status", "ACTIVE");
+            put("status", String.valueOf(Status.NOT_ACTIVE));
         }});
     }};
 
@@ -63,11 +59,12 @@ public class PortController {
         updatePort.put("id", id);
         return updatePort;
     }
-    
+
     @DeleteMapping("{id}")
     public void delete(@PathVariable String id) {
         Map<String, String> port = getById(id);
         ports.remove(port);
+        counter--;
 
     }
 
