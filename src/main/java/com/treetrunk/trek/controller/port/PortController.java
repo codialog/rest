@@ -1,71 +1,53 @@
 package com.treetrunk.trek.controller.port;
 
-import com.treetrunk.trek.exceptions.NotFoundException;
+import com.treetrunk.trek.model.port.Port;
+import com.treetrunk.trek.service.impl.PortServiceImpl;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
-@RequestMapping("port")
+@RequestMapping("api/port")
 public class PortController {
-    private int counter = 3;
 
-    private List<Map<String, String>> ports = new ArrayList<Map<String, String>>() {{
-        add(new HashMap<String, String>() {{
-            put("id", "0");
-            put("status", String.valueOf(Status.TRANSIT));
-        }});
-        add(new HashMap<String, String>() {{
-            put("id", "1");
-            put("status", String.valueOf(Status.NOT_ACTIVE));
-        }});
-        add(new HashMap<String, String>() {{
-            put("id", "2");
-            put("status", String.valueOf(Status.NOT_ACTIVE));
-        }});
-    }};
+    private final PortServiceImpl portServiceImpl;
+
+    public PortController(PortServiceImpl portServiceImpl) {
+        this.portServiceImpl = portServiceImpl;
+    }
 
     @GetMapping
-    public List<Map<String, String>> list() {
-        return ports;
+    public List<Port> getAll() {
+        List<Port> portList = portServiceImpl.getAll();
+        return portList;
     }
 
     @GetMapping("{id}")
-    private Map<String, String> getPort(@PathVariable String id) {
-        return getById(id);
-    }
-
-    private Map<String, String> getById(@PathVariable String id) {
-        return ports.stream()
-                .filter(port -> port.get("id").equals(id))
-                .findFirst()
-                .orElseThrow(NotFoundException::new);
+    private ResponseEntity<Port> findById(@PathVariable(name = "id") Long id) {
+        Port port = portServiceImpl.findById(id);
+        if (port == null) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(port, HttpStatus.OK);
     }
 
     @PostMapping
-    public Map<String, String> create(@RequestBody Map<String, String> port) {
-        port.put("id", String.valueOf(counter++));
-        ports.add(port);
-        return port;
+    public Port create(@RequestBody Port port) {
+        return portServiceImpl.create(port);
     }
 
     @PutMapping("{id}")
-    public Map<String, String> update(@PathVariable String id, @RequestBody Map<String, String> port) {
-        Map<String, String> updatePort = getById(id);
-        updatePort.putAll(port);
-        updatePort.put("id", id);
-        return updatePort;
+    public Port update(@PathVariable(name = "id") Long id,
+                       @RequestBody Port port) {
+        Port updatePort = portServiceImpl.findById(id);
+        return portServiceImpl.update(updatePort, port);
     }
 
     @DeleteMapping("{id}")
-    public void delete(@PathVariable String id) {
-        Map<String, String> port = getById(id);
-        ports.remove(port);
-        counter--;
-
+    public void delete(@PathVariable(name = "id") Long id) {
+        portServiceImpl.delete(id);
     }
 
 }
