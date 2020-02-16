@@ -4,12 +4,10 @@ import com.treetrunk.trek.controller.port.PortController;
 import com.treetrunk.trek.controller.port.Status;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -17,18 +15,17 @@ import static org.hamcrest.core.StringContains.containsString;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 class TrekApplicationTests {
 
+    String status = "status";
     @Autowired
     private MockMvc mockMvc;
     private String testUrl = "/port";
-    String status = "status";
-
     @Autowired
     private PortController portController;
 
@@ -74,8 +71,9 @@ class TrekApplicationTests {
         this.mockMvc.perform(MockMvcRequestBuilders
                 .delete(testUrl + "/" + id)
                 .contentType(MediaType.APPLICATION_JSON))
-            .andExpect(status().isOk());
+                .andExpect(status().isOk());
     }
+
     @Test
     void update_port() throws Exception {
         int id = 2;
