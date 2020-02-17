@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -35,12 +36,14 @@ public class PortController {
 
     @PostMapping
     public Port create(@RequestBody Port port) {
+        port.setCreated(new Date());
         return portServiceImpl.create(port);
     }
 
     @PutMapping("{id}")
     public Port update(@PathVariable(name = "id") Long id,
                        @RequestBody Port port) {
+        port.setUpdated(new Date());
         Port updatePort = portServiceImpl.findById(id);
         return portServiceImpl.update(updatePort, port);
     }

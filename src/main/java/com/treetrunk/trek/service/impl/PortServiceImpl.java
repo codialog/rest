@@ -25,7 +25,7 @@ public class PortServiceImpl implements PortService {
 
     @Override
     public Port update(Port updatePort, Port port) {
-        BeanUtils.copyProperties(port, updatePort, "id");
+        BeanUtils.copyProperties(port, updatePort, "id", "created");
         return portRepository.save(updatePort);
     }
 

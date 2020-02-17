@@ -15,6 +15,4 @@ public interface PortService {
     List<Port> getAll();
 
     Port findById(Long id);
-
-
 }

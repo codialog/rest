@@ -1,5 +1,6 @@
 package com.treetrunk.trek.model.port;
 
+import com.treetrunk.trek.model.BaseEntity;
 import lombok.Data;
 import org.hibernate.annotations.Type;
 
@@ -9,11 +10,7 @@ import java.io.Serializable;
 @Data
 @Entity
 @Table(name = "ports")
-public class Port implements Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Port extends BaseEntity {
 
     @Column(name = "number")
     private int number;
