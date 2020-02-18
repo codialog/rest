@@ -36,8 +36,7 @@ public class PortServiceImpl implements PortService {
 
     @Override
     public List<Port> getAll() {
-        List<Port> portList = portRepository.findAll();
-        return portList;
+        return portRepository.findAll();
     }
 
     @Override
