@@ -1,6 +1,6 @@
 package com.treetrunk.trek.service.impl;
 
-import com.treetrunk.trek.model.port.Port;
+import com.treetrunk.trek.model.Port;
 import com.treetrunk.trek.repository.PortRepository;
 import com.treetrunk.trek.service.PortService;
 import org.springframework.beans.BeanUtils;

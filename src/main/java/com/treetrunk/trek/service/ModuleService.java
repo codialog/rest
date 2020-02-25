@@ -1,6 +1,6 @@
 package com.treetrunk.trek.service;
 
-import com.treetrunk.trek.model.module.Module;
+import com.treetrunk.trek.model.Module;
 
 import java.util.List;
 

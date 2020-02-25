@@ -1,6 +1,6 @@
-package com.treetrunk.trek.controller.port;
+package com.treetrunk.trek.controller;
 
-import com.treetrunk.trek.model.port.Port;
+import com.treetrunk.trek.model.Port;
 import com.treetrunk.trek.service.impl.PortServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +21,7 @@ public class PortController {
 
     @GetMapping
     public List<Port> getAll() {
-        List<Port> portList = portServiceImpl.getAll();
-        return portList;
+        return portServiceImpl.getAll();
     }
 
     @GetMapping("{id}")

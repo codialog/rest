@@ -1,11 +1,8 @@
-package com.treetrunk.trek.model.port;
+package com.treetrunk.trek.model;
 
-import com.treetrunk.trek.model.BaseEntity;
 import lombok.Data;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Data
 @Entity

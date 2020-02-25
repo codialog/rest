@@ -1,6 +1,6 @@
 package com.treetrunk.trek.service.impl;
 
-import com.treetrunk.trek.model.module.Module;
+import com.treetrunk.trek.model.Module;
 import com.treetrunk.trek.repository.ModuleRepository;
 import com.treetrunk.trek.service.ModuleService;
 import org.springframework.beans.BeanUtils;

@@ -1,6 +1,6 @@
-package com.treetrunk.trek.controller.module;
+package com.treetrunk.trek.controller;
 
-import com.treetrunk.trek.model.module.Module;
+import com.treetrunk.trek.model.Module;
 import com.treetrunk.trek.service.impl.ModuleServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +21,7 @@ public class ModuleController {
 
     @GetMapping
     public List<Module> getAll() {
-        List<Module> moduleList = moduleServiceImpl.getAll();
-        return moduleList;
+        return moduleServiceImpl.getAll();
     }
 
     @GetMapping("{id}")
