@@ -13,20 +13,20 @@ import java.util.List;
 @RequestMapping("api/cross")
 public class CrossController {
 
-    private final CrossServiceImpl portServiceImpl;
+    private final CrossServiceImpl crossService;
 
-    public CrossController(CrossServiceImpl portServiceImpl) {
-        this.portServiceImpl = portServiceImpl;
+    public CrossController(CrossServiceImpl crossService) {
+        this.crossService = crossService;
     }
 
     @GetMapping
     public List<Cross> getAll() {
-        return portServiceImpl.getAll();
+        return crossService.getAll();
     }
 
     @GetMapping("{id}")
     private ResponseEntity<Cross> findById(@PathVariable(name = "id") Long id) {
-        Cross cross = portServiceImpl.findById(id);
+        Cross cross = crossService.findById(id);
         if (cross == null) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -36,20 +36,20 @@ public class CrossController {
     @PostMapping
     public Cross create(@RequestBody Cross cross) {
         cross.setCreated(new Date());
-        return portServiceImpl.create(cross);
+        return crossService.create(cross);
     }
 
     @PutMapping("{id}")
     public Cross update(@PathVariable(name = "id") Long id,
                         @RequestBody Cross cross) {
         cross.setUpdated(new Date());
-        Cross updateCross = portServiceImpl.findById(id);
-        return portServiceImpl.update(updateCross, cross);
+        Cross updateCross = crossService.findById(id);
+        return crossService.update(updateCross, cross);
     }
 
     @DeleteMapping("{id}")
     public void delete(@PathVariable(name = "id") Long id) {
-        portServiceImpl.delete(id);
+        crossService.delete(id);
     }
 
 }

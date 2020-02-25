@@ -13,20 +13,20 @@ import java.util.List;
 @RequestMapping("api/port")
 public class PortController {
 
-    private final PortServiceImpl portServiceImpl;
+    private final PortServiceImpl portService;
 
-    public PortController(PortServiceImpl portServiceImpl) {
-        this.portServiceImpl = portServiceImpl;
+    public PortController(PortServiceImpl portService) {
+        this.portService = portService;
     }
 
     @GetMapping
     public List<Port> getAll() {
-        return portServiceImpl.getAll();
+        return portService.getAll();
     }
 
     @GetMapping("{id}")
     private ResponseEntity<Port> findById(@PathVariable(name = "id") Long id) {
-        Port port = portServiceImpl.findById(id);
+        Port port = portService.findById(id);
         if (port == null) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -36,20 +36,20 @@ public class PortController {
     @PostMapping
     public Port create(@RequestBody Port port) {
         port.setCreated(new Date());
-        return portServiceImpl.create(port);
+        return portService.create(port);
     }
 
     @PutMapping("{id}")
     public Port update(@PathVariable(name = "id") Long id,
                        @RequestBody Port port) {
         port.setUpdated(new Date());
-        Port updatePort = portServiceImpl.findById(id);
-        return portServiceImpl.update(updatePort, port);
+        Port updatePort = portService.findById(id);
+        return portService.update(updatePort, port);
     }
 
     @DeleteMapping("{id}")
     public void delete(@PathVariable(name = "id") Long id) {
-        portServiceImpl.delete(id);
+        portService.delete(id);
     }
 
 }

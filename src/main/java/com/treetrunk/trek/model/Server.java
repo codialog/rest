@@ -1,0 +1,18 @@
+package com.treetrunk.trek.model;
+
+import lombok.Data;
+
+import javax.persistence.*;
+
+@Data
+@Entity
+@Table(name = "servers")
+public class Server extends BaseEntity {
+
+    @Column(name = "name")
+    private int name;
+
+    @Column(name = "address")
+    private String address;
+}
+

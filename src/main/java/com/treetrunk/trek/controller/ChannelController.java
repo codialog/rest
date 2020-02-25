@@ -13,20 +13,20 @@ import java.util.List;
 @RequestMapping("api/channel")
 public class ChannelController {
 
-    private final ChannelServiceImpl portServiceImpl;
+    private final ChannelServiceImpl channelService;
 
-    public ChannelController(ChannelServiceImpl portServiceImpl) {
-        this.portServiceImpl = portServiceImpl;
+    public ChannelController(ChannelServiceImpl channelService) {
+        this.channelService = channelService;
     }
 
     @GetMapping
     public List<Channel> getAll() {
-        return portServiceImpl.getAll();
+        return channelService.getAll();
     }
 
     @GetMapping("{id}")
     private ResponseEntity<Channel> findById(@PathVariable(name = "id") Long id) {
-        Channel channel = portServiceImpl.findById(id);
+        Channel channel = channelService.findById(id);
         if (channel == null) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -36,20 +36,20 @@ public class ChannelController {
     @PostMapping
     public Channel create(@RequestBody Channel channel) {
         channel.setCreated(new Date());
-        return portServiceImpl.create(channel);
+        return channelService.create(channel);
     }
 
     @PutMapping("{id}")
     public Channel update(@PathVariable(name = "id") Long id,
                           @RequestBody Channel channel) {
         channel.setUpdated(new Date());
-        Channel updateChannel = portServiceImpl.findById(id);
-        return portServiceImpl.update(updateChannel, channel);
+        Channel updateChannel = channelService.findById(id);
+        return channelService.update(updateChannel, channel);
     }
 
     @DeleteMapping("{id}")
     public void delete(@PathVariable(name = "id") Long id) {
-        portServiceImpl.delete(id);
+        channelService.delete(id);
     }
 
 }

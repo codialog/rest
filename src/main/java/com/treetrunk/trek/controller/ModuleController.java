@@ -13,20 +13,20 @@ import java.util.List;
 @RequestMapping("api/module")
 public class ModuleController {
 
-    private final ModuleServiceImpl moduleServiceImpl;
+    private final ModuleServiceImpl moduleService;
 
-    public ModuleController(ModuleServiceImpl moduleServiceImpl) {
-        this.moduleServiceImpl = moduleServiceImpl;
+    public ModuleController(ModuleServiceImpl moduleService) {
+        this.moduleService = moduleService;
     }
 
     @GetMapping
     public List<Module> getAll() {
-        return moduleServiceImpl.getAll();
+        return moduleService.getAll();
     }
 
     @GetMapping("{id}")
     private ResponseEntity<Module> findById(@PathVariable(name = "id") Long id) {
-        Module module = moduleServiceImpl.findById(id);
+        Module module = moduleService.findById(id);
         if (module == null) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -36,19 +36,19 @@ public class ModuleController {
     @PostMapping
     public Module create(@RequestBody Module module) {
         module.setCreated(new Date());
-        return moduleServiceImpl.create(module);
+        return moduleService.create(module);
     }
 
     @PutMapping("{id}")
     public Module update(@PathVariable(name = "id") Long id,
                          @RequestBody Module module) {
         module.setUpdated(new Date());
-        Module updateModule = moduleServiceImpl.findById(id);
-        return moduleServiceImpl.update(updateModule, module);
+        Module updateModule = moduleService.findById(id);
+        return moduleService.update(updateModule, module);
     }
 
     @DeleteMapping("{id}")
     public void delete(@PathVariable(name = "id") Long id) {
-        moduleServiceImpl.delete(id);
+        moduleService.delete(id);
     }
 }
