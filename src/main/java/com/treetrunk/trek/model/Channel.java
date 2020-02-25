@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "channel")
+@Table(name = "channels")
 public class Channel extends BaseEntity {
 
     @Column(name = "direction")
