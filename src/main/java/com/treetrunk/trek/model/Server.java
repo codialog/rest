@@ -10,7 +10,7 @@ import javax.persistence.*;
 public class Server extends BaseEntity {
 
     @Column(name = "name")
-    private int name;
+    private String name;
 
     @Column(name = "address")
     private String address;

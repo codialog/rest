@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -35,14 +35,14 @@ public class CrossController {
 
     @PostMapping
     public Cross create(@RequestBody Cross cross) {
-        cross.setCreated(new Date());
+        cross.setCreatedDate(LocalDateTime.now());
         return crossService.create(cross);
     }
 
     @PutMapping("{id}")
     public Cross update(@PathVariable(name = "id") Long id,
                         @RequestBody Cross cross) {
-        cross.setUpdated(new Date());
+        cross.setUpdatedDate(LocalDateTime.now());
         Cross updateCross = crossService.findById(id);
         return crossService.update(updateCross, cross);
     }

@@ -19,4 +19,7 @@ public class Module extends BaseEntity {
 
     @Column(name = "empty_slots")
     private int emptySlots;
+
+    @Column(name = "cross_id")
+    private Long crossId;
 }

@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -35,14 +35,14 @@ public class ServerController {
 
     @PostMapping
     public Server create(@RequestBody Server server) {
-        server.setCreated(new Date());
+        server.setCreatedDate(LocalDateTime.now());
         return serverService.create(server);
     }
 
     @PutMapping("{id}")
     public Server update(@PathVariable(name = "id") Long id,
                          @RequestBody Server server) {
-        server.setUpdated(new Date());
+        server.setUpdatedDate(LocalDateTime.now());
         Server updateServer = serverService.findById(id);
         return serverService.update(updateServer, server);
     }

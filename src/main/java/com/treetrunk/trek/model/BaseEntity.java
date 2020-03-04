@@ -1,12 +1,13 @@
 package com.treetrunk.trek.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.repository.Modifying;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @MappedSuperclass
 @Data
@@ -14,21 +15,26 @@ public class BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonView(Views.IdName.class)
     private Long id;
 
     @CreatedDate
     @Column(name = "created", updatable = false)
-    private Date created;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonView(Views.DateInfo.class)
+    private LocalDateTime created;
 
     @LastModifiedDate
     @Column(name = "updated")
-    private Date updated;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonView(Views.DateInfo.class)
+    private LocalDateTime updated;
 
-    public void setCreated(Date created) {
+    public void setCreatedDate(LocalDateTime created) {
         this.created = created;
     }
 
-    public void setUpdated(Date updated) {
+    public void setUpdatedDate(LocalDateTime updated) {
         this.updated = updated;
     }
 }

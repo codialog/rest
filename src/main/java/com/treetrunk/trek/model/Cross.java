@@ -17,5 +17,8 @@ public class Cross extends BaseEntity {
 
     @Column(name = "empty_modules")
     private Integer emptyPorts;
+
+    @Column(name = "server_id")
+    private Long serverId;
 }
 

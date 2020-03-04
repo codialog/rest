@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -35,14 +35,14 @@ public class ModuleController {
 
     @PostMapping
     public Module create(@RequestBody Module module) {
-        module.setCreated(new Date());
+        module.setCreatedDate(LocalDateTime.now());
         return moduleService.create(module);
     }
 
     @PutMapping("{id}")
     public Module update(@PathVariable(name = "id") Long id,
                          @RequestBody Module module) {
-        module.setUpdated(new Date());
+        module.setUpdatedDate(LocalDateTime.now());
         Module updateModule = moduleService.findById(id);
         return moduleService.update(updateModule, module);
     }

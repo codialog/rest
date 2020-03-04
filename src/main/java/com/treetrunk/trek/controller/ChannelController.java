@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -35,14 +35,14 @@ public class ChannelController {
 
     @PostMapping
     public Channel create(@RequestBody Channel channel) {
-        channel.setCreated(new Date());
+        channel.setCreatedDate(LocalDateTime.now());
         return channelService.create(channel);
     }
 
     @PutMapping("{id}")
     public Channel update(@PathVariable(name = "id") Long id,
                           @RequestBody Channel channel) {
-        channel.setUpdated(new Date());
+        channel.setUpdatedDate(LocalDateTime.now());
         Channel updateChannel = channelService.findById(id);
         return channelService.update(updateChannel, channel);
     }

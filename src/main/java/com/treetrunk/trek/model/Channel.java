@@ -15,7 +15,10 @@ public class Channel extends BaseEntity {
     @Column(name = "amount_ports")
     private Integer amountPorts;
 
-    @Column(name = "empty_ports")
-    private Integer emptyPorts;
+    @Column(name = "free_ports")
+    private Integer freePorts;
+
+    @Column(name = "cross_id")
+    private Long crossId;
 }
 

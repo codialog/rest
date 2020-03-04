@@ -1,7 +1,7 @@
 package com.treetrunk.trek;
 
-import com.treetrunk.trek.controller.port.PortController;
-import com.treetrunk.trek.controller.port.Status;
+import com.treetrunk.trek.controller.PortController;
+import com.treetrunk.trek.model.Status;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
