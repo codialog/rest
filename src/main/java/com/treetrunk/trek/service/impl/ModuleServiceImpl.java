@@ -1,6 +1,7 @@
 package com.treetrunk.trek.service.impl;
 
 import com.treetrunk.trek.model.Module;
+import com.treetrunk.trek.model.Port;
 import com.treetrunk.trek.repository.ModuleRepository;
 import com.treetrunk.trek.service.ModuleService;
 import org.springframework.beans.BeanUtils;
@@ -42,5 +43,9 @@ public class ModuleServiceImpl implements ModuleService {
     @Override
     public Module findById(Long id) {
         return moduleRepository.findById(id).orElse(null);
+    }
+
+    public List<Module> findByCrossId(Long crossId) {
+        return moduleRepository.findByCrossId(crossId);
     }
 }

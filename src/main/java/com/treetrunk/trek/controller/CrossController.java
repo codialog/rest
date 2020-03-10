@@ -2,6 +2,7 @@ package com.treetrunk.trek.controller;
 
 import com.treetrunk.trek.model.Cross;
 import com.treetrunk.trek.service.impl.CrossServiceImpl;
+import com.treetrunk.trek.service.impl.PortServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,9 +15,11 @@ import java.util.List;
 public class CrossController {
 
     private final CrossServiceImpl crossService;
+    private final PortServiceImpl portService;
 
-    public CrossController(CrossServiceImpl crossService) {
+    public CrossController(CrossServiceImpl crossService, PortServiceImpl portService) {
         this.crossService = crossService;
+        this.portService = portService;
     }
 
     @GetMapping
@@ -29,6 +32,8 @@ public class CrossController {
         Cross cross = crossService.findById(id);
         if (cross == null) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+
         }
         return new ResponseEntity<>(cross, HttpStatus.OK);
     }

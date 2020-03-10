@@ -2,6 +2,7 @@ package com.treetrunk.trek.controller;
 
 import com.treetrunk.trek.model.Module;
 import com.treetrunk.trek.service.impl.ModuleServiceImpl;
+import com.treetrunk.trek.service.impl.PortServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,9 +15,11 @@ import java.util.List;
 public class ModuleController {
 
     private final ModuleServiceImpl moduleService;
+    private final PortServiceImpl portService;
 
-    public ModuleController(ModuleServiceImpl moduleService) {
+    public ModuleController(ModuleServiceImpl moduleService, PortServiceImpl portService) {
         this.moduleService = moduleService;
+        this.portService = portService;
     }
 
     @GetMapping

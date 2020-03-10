@@ -1,6 +1,7 @@
 package com.treetrunk.trek.service.impl;
 
 import com.treetrunk.trek.model.Channel;
+import com.treetrunk.trek.model.Module;
 import com.treetrunk.trek.repository.ChannelRepository;
 import com.treetrunk.trek.service.ChannelService;
 import org.springframework.beans.BeanUtils;
@@ -42,6 +43,10 @@ public class ChannelServiceImpl implements ChannelService {
     @Override
     public Channel findById(Long id) {
         return channelRepository.findById(id).orElse(null);
+    }
+
+    public List<Channel> findByCrossId(Long crossId) {
+        return channelRepository.findByCrossId(crossId);
     }
 
 
