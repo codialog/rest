@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "ports")
-public class Port extends BaseEntity {
+public class Port extends AbstractEntity {
 
     @Column(name = "number")
     private int number;
@@ -32,9 +32,9 @@ public class Port extends BaseEntity {
     @JoinColumn(name = "module_id")
     private Module module;
 
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
-    @JoinColumn(name = "channel_id")
-    private Channel channel;
+    //@ManyToOne(optional = false, cascade = CascadeType.ALL)
+    //@JoinColumn(name = "channel_id")
+    //private Channel channel;
 
     public int getNumber() {
         return number;
@@ -100,12 +100,5 @@ public class Port extends BaseEntity {
         this.module = module;
     }
 
-    public Channel getChannel() {
-        return channel;
-    }
-
-    public void setChannel(Channel channel) {
-        this.channel = channel;
-    }
 }
 

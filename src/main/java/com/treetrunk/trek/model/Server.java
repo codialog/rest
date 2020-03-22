@@ -8,7 +8,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "servers")
-public class Server extends BaseEntity {
+public class Server extends AbstractEntity {
 
     @Column(name = "name")
     private String name;

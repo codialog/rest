@@ -7,7 +7,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "modules")
-public class Module extends BaseEntity {
+public class Module extends AbstractEntity {
 
     @Column(name = "number")
     private int number;

@@ -1,55 +1,15 @@
 package com.treetrunk.trek.controller;
 
 import com.treetrunk.trek.model.Cross;
-import com.treetrunk.trek.service.impl.CrossServiceImpl;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDateTime;
-import java.util.List;
+import com.treetrunk.trek.service.CrossService;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("api/cross")
-public class CrossController {
+public class CrossController extends AbstractController<Cross, CrossService> {
 
-    private final CrossServiceImpl crossService;
-
-    public CrossController(CrossServiceImpl crossService) {
-        this.crossService = crossService;
+    public CrossController(CrossService service) {
+        super(service);
     }
-
-    @GetMapping
-    public List<Cross> getAll() {
-        return crossService.getAll();
-    }
-
-    @GetMapping("{id}")
-    private ResponseEntity<Cross> findById(@PathVariable(name = "id") Long id) {
-        Cross cross = crossService.findById(id);
-        if (cross == null) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(cross, HttpStatus.OK);
-    }
-
-    @PostMapping
-    public Cross create(@RequestBody Cross cross) {
-        cross.setCreated(LocalDateTime.now());
-        return crossService.create(cross);
-    }
-
-    @PutMapping("{id}")
-    public Cross update(@PathVariable(name = "id") Long id,
-                        @RequestBody Cross cross) {
-        cross.setUpdated(LocalDateTime.now());
-        Cross updateCross = crossService.findById(id);
-        return crossService.update(updateCross, cross);
-    }
-
-    @DeleteMapping("{id}")
-    public void delete(@PathVariable(name = "id") Long id) {
-        crossService.delete(id);
-    }
-
 }
