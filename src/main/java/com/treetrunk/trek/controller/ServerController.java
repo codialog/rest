@@ -35,14 +35,14 @@ public class ServerController {
 
     @PostMapping
     public Server create(@RequestBody Server server) {
-        server.setCreatedDate(LocalDateTime.now());
+        server.setCreated(LocalDateTime.now());
         return serverService.create(server);
     }
 
     @PutMapping("{id}")
     public Server update(@PathVariable(name = "id") Long id,
                          @RequestBody Server server) {
-        server.setUpdatedDate(LocalDateTime.now());
+        server.setUpdated(LocalDateTime.now());
         Server updateServer = serverService.findById(id);
         return serverService.update(updateServer, server);
     }

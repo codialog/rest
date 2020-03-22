@@ -1,14 +1,10 @@
 package com.treetrunk.trek.model;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import java.util.List;
+import javax.persistence.*;
+import java.util.Set;
 
-import com.treetrunk.trek.model.Port;
-@Data
 @Entity
 @Table(name = "modules")
 public class Module extends BaseEntity {
@@ -22,8 +18,13 @@ public class Module extends BaseEntity {
     @Column(name = "empty_slots")
     private int emptySlots;
 
-    @Column(name = "cross_id")
-    private Long crossId;
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "cross_id")
+    private Cross cross;
+
+    @OneToMany(mappedBy = "module", fetch = FetchType.EAGER)
+    @JsonIgnoreProperties("module")
+    private Set<Port> ports;
 
     public int getNumber() {
         return number;
@@ -49,11 +50,19 @@ public class Module extends BaseEntity {
         this.emptySlots = emptySlots;
     }
 
-    public Long getCrossId() {
-        return crossId;
+    public Cross getCross() {
+        return cross;
     }
 
-    public void setCrossId(Long crossId) {
-        this.crossId = crossId;
+    public void setCross(Cross cross) {
+        this.cross = cross;
+    }
+
+    public Set<Port> getPorts() {
+        return ports;
+    }
+
+    public void setPorts(Set<Port> ports) {
+        this.ports = ports;
     }
 }
