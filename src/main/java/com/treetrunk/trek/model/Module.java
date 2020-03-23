@@ -1,11 +1,16 @@
 package com.treetrunk.trek.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
+@Getter(AccessLevel.PUBLIC)
+@Setter(AccessLevel.PUBLIC)
 @Table(name = "modules")
 public class Module extends AbstractEntity {
 
@@ -25,44 +30,4 @@ public class Module extends AbstractEntity {
     @OneToMany(mappedBy = "module", fetch = FetchType.EAGER)
     @JsonIgnoreProperties("module")
     private Set<Port> ports;
-
-    public int getNumber() {
-        return number;
-    }
-
-    public void setNumber(int number) {
-        this.number = number;
-    }
-
-    public int getAmountSlots() {
-        return amountSlots;
-    }
-
-    public void setAmountSlots(int amountSlots) {
-        this.amountSlots = amountSlots;
-    }
-
-    public int getEmptySlots() {
-        return emptySlots;
-    }
-
-    public void setEmptySlots(int emptySlots) {
-        this.emptySlots = emptySlots;
-    }
-
-    public Cross getCross() {
-        return cross;
-    }
-
-    public void setCross(Cross cross) {
-        this.cross = cross;
-    }
-
-    public Set<Port> getPorts() {
-        return ports;
-    }
-
-    public void setPorts(Set<Port> ports) {
-        this.ports = ports;
-    }
 }

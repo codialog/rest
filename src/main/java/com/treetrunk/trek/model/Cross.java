@@ -2,6 +2,9 @@ package com.treetrunk.trek.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -11,6 +14,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "crosses")
+@Getter(AccessLevel.PUBLIC)
+@Setter(AccessLevel.PUBLIC)
 public class Cross extends AbstractEntity {
 
     @CreatedDate
@@ -27,10 +32,10 @@ public class Cross extends AbstractEntity {
     private String name;
 
     @Column(name = "count_modules")
-    private Integer amountPorts;
+    private Integer amountSlots;
 
     @Column(name = "empty_modules")
-    private Integer emptyPorts;
+    private Integer emptySlots;
 
     @OneToMany(mappedBy = "cross", fetch = FetchType.EAGER)
     @JsonIgnoreProperties("cross")
@@ -40,61 +45,5 @@ public class Cross extends AbstractEntity {
     @JoinColumn(name = "server_id")
     @JsonIgnoreProperties("crosses")
     private Server server;
-
-    public void setCreated(LocalDateTime created) {
-        this.created = created;
-    }
-
-    public void setUpdated(LocalDateTime updated) {
-        this.updated = updated;
-    }
-
-    public LocalDateTime getCreated() {
-        return created;
-    }
-
-    public LocalDateTime getUpdated() {
-        return updated;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getAmountPorts() {
-        return amountPorts;
-    }
-
-    public void setAmountPorts(Integer amountPorts) {
-        this.amountPorts = amountPorts;
-    }
-
-    public Integer getEmptyPorts() {
-        return emptyPorts;
-    }
-
-    public void setEmptyPorts(Integer emptyPorts) {
-        this.emptyPorts = emptyPorts;
-    }
-
-    public Set<Module> getModules() {
-        return modules;
-    }
-
-    public void setModules(Set<Module> modules) {
-        this.modules = modules;
-    }
-
-    public Server getServer() {
-        return server;
-    }
-
-    public void setServer(Server server) {
-        this.server = server;
-    }
 }
 
