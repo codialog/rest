@@ -46,10 +46,10 @@ public abstract class AbstractController<E extends AbstractEntity, S extends Com
     public ResponseEntity<E> update(@PathVariable(name = "id") Long id, @RequestBody E entity) {
         E updateEntity = service.findById(id);
         E updated = service.update(updateEntity, entity);
-        if (entity == null) {
+        if (updated == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(entity, HttpStatus.OK);
+        return new ResponseEntity<>(updated, HttpStatus.OK);
     }
 
     public ResponseEntity delete(@PathVariable(name = "id") Long id) {

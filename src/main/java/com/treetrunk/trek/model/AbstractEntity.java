@@ -7,9 +7,9 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 
+@MappedSuperclass
 @Getter(AccessLevel.PUBLIC)
 @Setter(AccessLevel.PUBLIC)
-@MappedSuperclass
 public abstract class AbstractEntity implements Serializable {
 
     @Id

@@ -21,7 +21,7 @@ public class Server extends AbstractEntity {
     @Column(name = "address")
     private String address;
 
-    @OneToMany(mappedBy = "server", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "server", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JsonIgnoreProperties("server")
     private Set<Cross> crosses;
 }

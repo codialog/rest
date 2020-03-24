@@ -37,5 +37,9 @@ public class Port extends AbstractEntity {
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "module_id")
     private Module module;
+
+    public void setModule(Module module) {
+        this.module = module;
+    }
 }
 

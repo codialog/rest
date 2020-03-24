@@ -27,7 +27,18 @@ public class Module extends AbstractEntity {
     @JoinColumn(name = "cross_id")
     private Cross cross;
 
-    @OneToMany(mappedBy = "module", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "module", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JsonIgnoreProperties("module")
     private Set<Port> ports;
+
+    public void setCross(Cross cross) {
+        this.cross = cross;
+    }
+
+    public void setPorts(Set<Port> ports) {
+        this.ports = ports;
+        for (Port port : this.ports) {
+            port.setModule(this);
+        }
+    }
 }
