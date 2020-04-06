@@ -17,11 +17,11 @@ public class Module extends AbstractEntity {
     @Column(name = "number")
     private int number;
 
-    @Column(name = "amount_slots")
-    private int amountSlots;
+    @Column(name = "amount_port_slots")
+    private int amountPortSlots;
 
-    @Column(name = "empty_slots")
-    private int emptySlots;
+    @Column(name = "empty_port_slots")
+    private int emptyPortSlots;
 
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "cross_id")

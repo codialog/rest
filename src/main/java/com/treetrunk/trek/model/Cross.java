@@ -5,8 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -18,12 +18,12 @@ import java.util.Set;
 @Setter(AccessLevel.PUBLIC)
 public class Cross extends AbstractEntity {
 
-    @CreatedDate
+    @CreationTimestamp
     @Column(name = "created", updatable = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private Date created;
 
-    @LastModifiedDate
+    @UpdateTimestamp
     @Column(name = "updated")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updated;
@@ -31,11 +31,11 @@ public class Cross extends AbstractEntity {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "count_modules")
-    private Integer amountSlots;
+    @Column(name = "count_module_slots")
+    private Integer amountModuleSlots;
 
-    @Column(name = "empty_modules")
-    private Integer emptySlots;
+    @Column(name = "empty_module_slots")
+    private Integer emptyModuleSlots;
 
     @OneToMany(mappedBy = "cross", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JsonIgnoreProperties("cross")
@@ -52,5 +52,7 @@ public class Cross extends AbstractEntity {
             module.setCross(this);
         }
     }
+
+
 }
 

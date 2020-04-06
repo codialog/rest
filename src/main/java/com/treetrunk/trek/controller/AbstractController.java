@@ -13,7 +13,6 @@ import java.util.List;
 public abstract class AbstractController<E extends AbstractEntity, S extends CommonService<E>> implements CommonController<E> {
     private final S service;
 
-    @Autowired
     protected AbstractController(S service) {
         this.service = service;
     }
