@@ -1,6 +1,6 @@
 package com.treetrunk.trek.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,14 +15,16 @@ import java.util.Set;
 @Table(name = "servers")
 public class Server extends AbstractEntity {
 
+    @JsonView(Views.Common.class)
     @Column(name = "name")
     private String name;
 
+    @JsonView(Views.Common.class)
     @Column(name = "address")
     private String address;
 
+    @JsonView(Views.Server.class)
     @OneToMany(mappedBy = "server", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("server")
     private Set<Cross> crosses;
 }
 

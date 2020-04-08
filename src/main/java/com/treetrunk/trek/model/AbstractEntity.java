@@ -1,5 +1,6 @@
 package com.treetrunk.trek.model;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,6 +13,7 @@ import java.io.Serializable;
 @Setter(AccessLevel.PUBLIC)
 public abstract class AbstractEntity implements Serializable {
 
+    @JsonView(Views.Common.class)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false)

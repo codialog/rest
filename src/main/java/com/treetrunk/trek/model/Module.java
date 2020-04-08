@@ -1,6 +1,6 @@
 package com.treetrunk.trek.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,21 +14,24 @@ import java.util.Set;
 @Table(name = "modules")
 public class Module extends AbstractEntity {
 
+    @JsonView(Views.Common.class)
     @Column(name = "number")
     private int number;
 
+    @JsonView(Views.Common.class)
     @Column(name = "amount_port_slots")
     private int amountPortSlots;
 
+    @JsonView(Views.Common.class)
     @Column(name = "empty_port_slots")
     private int emptyPortSlots;
 
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "cross_id")
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
     private Cross cross;
 
+    @JsonView(Views.Cross.class)
     @OneToMany(mappedBy = "module", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("module")
     private Set<Port> ports;
 
     public void setCross(Cross cross) {

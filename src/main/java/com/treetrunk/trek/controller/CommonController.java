@@ -1,6 +1,8 @@
 package com.treetrunk.trek.controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.treetrunk.trek.model.AbstractEntity;
+import com.treetrunk.trek.model.Views;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
