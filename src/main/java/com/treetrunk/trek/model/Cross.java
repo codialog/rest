@@ -18,13 +18,13 @@ import java.util.Set;
 @Setter(AccessLevel.PUBLIC)
 public class Cross extends AbstractEntity {
 
-    //@JsonView(Views.Common.class)
+    @JsonView(Views.Common.class)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     @CreationTimestamp
     @Column(name = "created", updatable = false)
     private Date created;
 
-    //@JsonView(Views.Common.class)
+    @JsonView(Views.Common.class)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     @UpdateTimestamp
     @Column(name = "updated")
@@ -48,7 +48,7 @@ public class Cross extends AbstractEntity {
 
     @JsonView(Views.Cross.class)
     @JoinColumn(name = "server_id")
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private Server server;
 
     public void setModules(Set<Module> modules) {

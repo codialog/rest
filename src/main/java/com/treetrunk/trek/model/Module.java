@@ -27,7 +27,7 @@ public class Module extends AbstractEntity {
     private int emptyPortSlots;
 
     @JoinColumn(name = "cross_id")
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private Cross cross;
 
     @JsonView(Views.Cross.class)
