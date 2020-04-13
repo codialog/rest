@@ -10,4 +10,12 @@ public class ServerService extends AbstractService<Server, ServerRepository> {
     public ServerService(ServerRepository repository) {
         super(repository);
     }
+
+    @Override
+    public Server create(Server server) {
+        if (super.findByName(server.getName()) == null) {
+            return super.create(server);
+        }
+        return server;
+    }
 }

@@ -39,4 +39,7 @@ public abstract class AbstractService<E extends AbstractEntity, R extends Common
     public E findById(Long id) {
         return repository.findById(id).orElse(null);
     }
+
+    @Override
+    public E findByName(String name) { return repository.findByName(name).orElse(null);}
 }
