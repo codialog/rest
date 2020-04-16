@@ -14,6 +14,4 @@ public interface CommonService<E extends AbstractEntity> {
     List<E> getAll();
 
     E findById(Long id);
-
-    E findByName(String name);
 }

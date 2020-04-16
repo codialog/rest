@@ -27,12 +27,14 @@ public class Port extends AbstractEntity {
     private String endPoint;
 
     @JsonView(Views.Common.class)
-    @Column(name = "transit_port_id")
-    private Long transitPortId;
+    @JoinColumn(name = "transit_port_id")
+    @OneToOne(cascade = CascadeType.ALL)
+    private Port transitPort;
 
     @JsonView(Views.Common.class)
-    @Column(name = "cross_port_id")
-    private Long crossPortId;
+    @JoinColumn(name = "cross_port_id")
+    @OneToOne(cascade = CascadeType.ALL)
+    private Port crossPort;
 
     @JsonView(Views.Common.class)
     @Column(name = "service")

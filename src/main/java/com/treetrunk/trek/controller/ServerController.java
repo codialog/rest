@@ -6,6 +6,7 @@ import com.treetrunk.trek.model.Views;
 import com.treetrunk.trek.service.ServerService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,5 +30,11 @@ public class ServerController extends AbstractController<Server, ServerService> 
     @Override
     public ResponseEntity<List<Server>> getAll() {
         return super.getAll();
+    }
+
+    @JsonView(Views.Server.class)
+    @Override
+    public ResponseEntity<Server> update(@PathVariable(name = "id") Long id, @RequestBody Server customServer) {
+        return super.update(id, customServer);
     }
 }

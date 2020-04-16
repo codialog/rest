@@ -20,9 +20,9 @@ public abstract class AbstractService<E extends AbstractEntity, R extends Common
     }
 
     @Override
-    public E update(E updateEntity, E entity) {
-        BeanUtils.copyProperties(entity, updateEntity);
-        return repository.save(updateEntity);
+    public E update(E entity, E customEntity) {
+        BeanUtils.copyProperties(customEntity, entity, "id");
+        return repository.save(entity);
     }
 
     @Override
@@ -40,6 +40,4 @@ public abstract class AbstractService<E extends AbstractEntity, R extends Common
         return repository.findById(id).orElse(null);
     }
 
-    @Override
-    public E findByName(String name) { return repository.findByName(name).orElse(null);}
 }

@@ -16,6 +16,6 @@ public abstract class AbstractEntity implements Serializable {
     @JsonView(Views.Common.class)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(updatable = false)
+    @Column(insertable = false, updatable = false)
     private Long id;
 }

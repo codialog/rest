@@ -15,7 +15,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/cross")
-
 public class CrossController extends AbstractController<Cross, CrossService> {
 
     public CrossController(CrossService service) {
@@ -38,5 +37,11 @@ public class CrossController extends AbstractController<Cross, CrossService> {
     @Override
     public ResponseEntity<Cross> create(@RequestBody Cross cross) {
         return super.create(cross);
+    }
+
+    @JsonView(Views.Cross.class)
+    @Override
+    public ResponseEntity<Cross> update(@PathVariable(name = "id") Long id, @RequestBody Cross customEntity) {
+        return super.update(id, customEntity);
     }
 }
