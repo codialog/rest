@@ -51,5 +51,13 @@ public class Port extends AbstractEntity {
     public void setModule(Module module) {
         this.module = module;
     }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public Module getModule() {
+        return module;
+    }
 }
 

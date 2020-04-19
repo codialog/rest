@@ -2,7 +2,6 @@ package com.treetrunk.trek.service;
 
 import com.treetrunk.trek.model.Server;
 import com.treetrunk.trek.repository.ServerRepository;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -24,7 +23,8 @@ public class ServerService extends AbstractService<Server, ServerRepository> {
         if (!customServer.getName().equals(server.getName()) && findByName(customServer.getName()) != null) {
             return null;
         }
-        return super.update(server, customServer);
+        String[] ignoreProperties = new String[]{"id", "crosses"};
+        return super.update(server, customServer, ignoreProperties);
     }
 
     public Server findByName(String name) {

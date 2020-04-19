@@ -44,4 +44,8 @@ public class Module extends AbstractEntity {
             port.setModule(this);
         }
     }
+
+    public Set<Port> getPorts() {
+        return ports;
+    }
 }
