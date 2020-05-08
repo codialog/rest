@@ -16,7 +16,7 @@ import java.util.Set;
 public class Server extends AbstractEntity {
 
     @JsonView(Views.Common.class)
-    @Column(name = "name")
+    @Column(name = "name", unique = true)
     private String name;
 
     @JsonView(Views.Common.class)
@@ -30,5 +30,12 @@ public class Server extends AbstractEntity {
     public String getName() {
         return name;
     }
-}
 
+    public String getAddress() {
+        return address;
+    }
+
+    public Set<Cross> getCrosses() {
+        return crosses;
+    }
+}

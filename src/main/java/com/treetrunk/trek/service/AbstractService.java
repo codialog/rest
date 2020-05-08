@@ -4,17 +4,24 @@ import com.treetrunk.trek.model.AbstractEntity;
 import com.treetrunk.trek.repository.CommonRepository;
 import org.springframework.beans.BeanUtils;
 
-import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 
-@Transactional
 public abstract class AbstractService<E extends AbstractEntity, R extends CommonRepository<E>> implements CommonService<E> {
 
     protected final R repository;
 
     protected AbstractService(R repository) {
         this.repository = repository;
+    }
+
+    @Override
+    public List<E> getAll() {
+        return repository.findAll();
+    }
+
+    @Override
+    public E findById(Long id) {
+        return repository.findById(id).orElse(null);
     }
 
     @Override
@@ -37,15 +44,4 @@ public abstract class AbstractService<E extends AbstractEntity, R extends Common
     public void delete(Long id) {
         repository.deleteById(id);
     }
-
-    @Override
-    public List<E> getAll() {
-        return repository.findAll();
-    }
-
-    @Override
-    public E findById(Long id) {
-        return repository.findById(id).orElse(null);
-    }
-
 }

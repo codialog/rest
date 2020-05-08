@@ -22,10 +22,6 @@ public class Module extends AbstractEntity {
     @Column(name = "amount_port_slots")
     private int amountPortSlots;
 
-    @JsonView(Views.Common.class)
-    @Column(name = "empty_port_slots")
-    private int emptyPortSlots;
-
     @JoinColumn(name = "cross_id")
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private Cross cross;
@@ -45,7 +41,23 @@ public class Module extends AbstractEntity {
         }
     }
 
+    public int getNumber() {
+        return number;
+    }
+
+    public int getAmountPortSlots() {
+        return amountPortSlots;
+    }
+
+    public Cross getCross() {
+        return cross;
+    }
+
     public Set<Port> getPorts() {
         return ports;
+    }
+
+    public int getEmptyPortSlots() {
+        return this.amountPortSlots - this.ports.size();
     }
 }

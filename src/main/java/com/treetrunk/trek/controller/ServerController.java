@@ -4,26 +4,30 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.treetrunk.trek.model.Server;
 import com.treetrunk.trek.model.Views;
 import com.treetrunk.trek.service.ServerService;
+import com.treetrunk.trek.validators.ServersValidator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
 @RequestMapping("api/server")
 public class ServerController extends AbstractController<Server, ServerService> {
 
-    protected ServerController(ServerService service) {
+    private final ServersValidator serversValidator;
+
+    @Autowired
+    public ServerController(ServerService service, ServersValidator serversValidator) {
         super(service);
+        this.serversValidator = serversValidator;
     }
 
-    @JsonView(Views.Server.class)
-    @Override
-    public ResponseEntity<Server> findById(@PathVariable(name = "id") Long id) {
-        return super.findById(id);
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        binder.setValidator(serversValidator);
     }
 
     @JsonView(Views.Server.class)
@@ -34,7 +38,20 @@ public class ServerController extends AbstractController<Server, ServerService> 
 
     @JsonView(Views.Server.class)
     @Override
-    public ResponseEntity<Server> update(@PathVariable(name = "id") Long id, @RequestBody Server customServer) {
+    public ResponseEntity<Server> findById(@PathVariable(name = "id") Long id) {
+        return super.findById(id);
+    }
+
+    @JsonView(Views.Server.class)
+    @Override
+    public ResponseEntity<Server> create(@RequestBody @Valid Server server) {
+        return super.create(server);
+    }
+
+    @JsonView(Views.Server.class)
+    @Override
+    public ResponseEntity<Server> update(@PathVariable(name = "id") Long id,
+                                         @Valid @RequestBody Server customServer) {
         return super.update(id, customServer);
     }
 }

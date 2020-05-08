@@ -8,14 +8,14 @@ import java.util.List;
 
 public interface CommonController<E extends AbstractEntity> {
 
-    @PostMapping
-    ResponseEntity<E> create(@RequestBody E entity);
-
     @GetMapping
     ResponseEntity<List<E>> getAll();
 
     @GetMapping("{id}")
     ResponseEntity<E> findById(@PathVariable(name = "id") Long id);
+
+    @PostMapping
+    ResponseEntity<?> create(@RequestBody E entity);
 
     @PutMapping("{id}")
     ResponseEntity<E> update(@PathVariable(name = "id") Long id, @RequestBody E entity);

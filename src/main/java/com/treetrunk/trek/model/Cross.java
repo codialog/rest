@@ -35,12 +35,8 @@ public class Cross extends AbstractEntity {
     private String name;
 
     @JsonView(Views.Common.class)
-    @Column(name = "count_module_slots")
+    @Column(name = "amount_module_slots")
     private Integer amountModuleSlots;
-
-    @JsonView(Views.Common.class)
-    @Column(name = "empty_module_slots")
-    private Integer emptyModuleSlots;
 
     @JsonView(Views.Cross.class)
     @OneToMany(mappedBy = "cross", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -58,6 +54,31 @@ public class Cross extends AbstractEntity {
         }
     }
 
+    public Date getCreated() {
+        return created;
+    }
 
+    public Date getUpdated() {
+        return updated;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Integer getAmountModuleSlots() {
+        return amountModuleSlots;
+    }
+
+    public int getEmptyModuleSlots() {
+        return this.amountModuleSlots - this.modules.size();
+    }
+
+    public Set<Module> getModules() {
+        return modules;
+    }
+
+    public Server getServer() {
+        return server;
+    }
 }
-
