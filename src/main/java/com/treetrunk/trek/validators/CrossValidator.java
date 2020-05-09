@@ -17,15 +17,17 @@ import java.util.logging.Logger;
 @Service
 public class CrossValidator implements Validator {
 
-    Logger logger = Logger.getLogger("Class CrossFormValidator");
+    Logger logger = Logger.getLogger("Class CrossValidator");
 
     private final ServerService serverService;
     private final ModuleValidator moduleValidator;
+    private final MessageService messageService;
 
     @Autowired
-    public CrossValidator(ServerService serverService, ModuleValidator moduleValidator) {
+    public CrossValidator(ServerService serverService, ModuleValidator moduleValidator, MessageService messageService) {
         this.serverService = serverService;
         this.moduleValidator = moduleValidator;
+        this.messageService = messageService;
     }
 
     @Override
@@ -35,17 +37,19 @@ public class CrossValidator implements Validator {
 
     @Override
     public void validate(Object obj, Errors errors) {
-        logger.info("Inside create validate ....");
+        logger.info("Inside validate ....");
         Cross cross = (Cross) obj;
         validateCrossName(cross, errors);
         validateModules(cross, errors);
     }
 
     public void validateCrossName(Cross cross, Errors errors) {
+        String validateField = "name";
         String name = cross.getName();
         // Empty
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "Cross name is a required field");
-        if (errors.getFieldError("name") != null) {
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, validateField,
+                messageService.getMessage("cross.name.notNull", null));
+        if (errors.getFieldError(validateField) != null) {
             return;
         }
         // Length
@@ -53,42 +57,41 @@ public class CrossValidator implements Validator {
         int minLengthName = 2;
         int crossNameLength = name.length();
         if (crossNameLength > maxLengthName) {
-            errors.rejectValue("name", "Cross name should be shorter then " + maxLengthName + " characters");
+            errors.rejectValue(validateField, messageService.getMessage("cross.name.maxSize", new Object[]{maxLengthName}));
             return;
         } else if (crossNameLength < minLengthName) {
-            errors.rejectValue("name", "Cross name should be longer than " + minLengthName + " characters");
+            errors.rejectValue(validateField, messageService.getMessage("cross.name.minSize", new Object[]{minLengthName}));
             return;
         }
         // Duplicate
         Long serverId = cross.getServer().getId();
         for (Cross duplicateCross : serverService.findById(serverId).getCrosses()) {
             if (name.equals(duplicateCross.getName())) {
-                errors.rejectValue("name", "Cross name in current server is already in use");
+                errors.rejectValue(validateField, messageService.getMessage("cross.name.inUse", null));
                 return;
             }
         }
     }
 
     public void validateModules(Cross cross, Errors errors) {
+        String validateField = "amountModuleSlots";
         //Slots
         if (cross.getAmountModuleSlots() <= 0) {
-            errors.rejectValue("amountModuleSlots",
-                    "Amount slots of modules should be more then 0");
+            errors.rejectValue(validateField, messageService.getMessage("cross.modules.positive", null));
         } else if (cross.getEmptyModuleSlots() < 0) {
-            errors.rejectValue("amountModuleSlots",
-                    "Amount slots of modules more then limit: " + cross.getAmountModuleSlots());
+            errors.rejectValue(validateField,
+                    messageService.getMessage("cross.modules.limit", new Object[]{cross.getAmountModuleSlots()}));
         }
         //Duplicate
         Collection<Module> moduleCollection = cross.getModules();
         Set<Integer> moduleNumbers = new HashSet<>();
         moduleCollection.forEach(m -> moduleNumbers.add(m.getNumber()));
         if (moduleCollection.size() > moduleNumbers.size()) {
-            errors.rejectValue("modules", "Numbers of modules are duplicated");
+            errors.rejectValue("modules", messageService.getMessage("module.number.inUse", null));
         }
         //Module fields
         for (Module module : cross.getModules()) {
             moduleValidator.validate(module, errors);
         }
-
     }
 }
