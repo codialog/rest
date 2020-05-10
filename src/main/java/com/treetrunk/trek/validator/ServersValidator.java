@@ -1,4 +1,4 @@
-package com.treetrunk.trek.validators;
+package com.treetrunk.trek.validator;
 
 import com.treetrunk.trek.model.Server;
 import com.treetrunk.trek.service.ServerService;

@@ -1,4 +1,4 @@
-package com.treetrunk.trek.events;
+package com.treetrunk.trek.event;
 
 import com.treetrunk.trek.model.Cross;
 import org.springframework.context.ApplicationEvent;

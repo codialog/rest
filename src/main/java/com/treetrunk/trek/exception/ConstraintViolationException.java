@@ -1,4 +1,4 @@
-package com.treetrunk.trek.exceptions;
+package com.treetrunk.trek.exception;
 
 public class ConstraintViolationException extends RuntimeException {
 

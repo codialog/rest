@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.treetrunk.trek.model.Server;
 import com.treetrunk.trek.model.Views;
 import com.treetrunk.trek.service.ServerService;
-import com.treetrunk.trek.validators.ServersValidator;
+import com.treetrunk.trek.validator.ServersValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.WebDataBinder;

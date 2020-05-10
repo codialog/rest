@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.treetrunk.trek.model.Cross;
 import com.treetrunk.trek.model.Views;
 import com.treetrunk.trek.service.CrossService;
-import com.treetrunk.trek.validators.CrossValidator;
+import com.treetrunk.trek.validator.CrossValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.ResponseEntity;

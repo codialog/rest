@@ -1,4 +1,4 @@
-package com.treetrunk.trek.validators;
+package com.treetrunk.trek.validator;
 
 import com.treetrunk.trek.model.Cross;
 import com.treetrunk.trek.model.Module;

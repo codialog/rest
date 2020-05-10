@@ -1,4 +1,4 @@
-package com.treetrunk.trek.validators;
+package com.treetrunk.trek.validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
