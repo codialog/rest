@@ -19,9 +19,9 @@ public class ServerService extends AbstractService<Server, ServerRepository> {
     }
 
     @Override
-    public Server update(Server server, Server customServer) {
+    public Server update(Long id, Server customServer) {
         String[] ignoreProperties = new String[]{"id", "crosses"};
-        return super.update(server, customServer, ignoreProperties);
+        return super.update(id, customServer, ignoreProperties);
     }
 
     public Server findByName(String name) {

@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -22,8 +24,8 @@ public class Module extends AbstractEntity {
     @Column(name = "amount_port_slots")
     private int amountPortSlots;
 
-    @JoinColumn(name = "cross_id")
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JoinColumn(name = "cross_id", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     private Cross cross;
 
     @JsonView(Views.Cross.class)
@@ -59,5 +61,11 @@ public class Module extends AbstractEntity {
 
     public int getEmptyPortSlots() {
         return this.amountPortSlots - this.ports.size();
+    }
+
+    public List<Long> getPortsId(){
+        List<Long> list = new ArrayList<>();
+        this.ports.forEach(p->list.add(p.getId()));
+        return list;
     }
 }

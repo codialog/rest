@@ -33,12 +33,13 @@ public class ServersValidator implements Validator {
     public void validate(Object obj, Errors errors) {
         logger.info("Inside validate ....");
         Server server = (Server) obj;
-        validateServerName(server.getName(), errors);
+        validateServerName(server, errors);
     }
 
-    public void validateServerName(String name, Errors errors) {
+    public void validateServerName(Server server, Errors errors) {
         // Empty
         String validateField = "name";
+        String name = server.getName();
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, validateField,
                 messageService.getMessage("server.name.notNull", null));
         if (errors.getFieldError(validateField) != null) {
@@ -59,7 +60,7 @@ public class ServersValidator implements Validator {
         }
         // Duplicate
         Server duplicatedServer = serverService.findByName(name);
-        if (duplicatedServer != null) {
+        if (duplicatedServer != null && !server.getId().equals(duplicatedServer.getId())) {
             errors.rejectValue(validateField, messageService.getMessage("server.name.inUse", null));
         }
     }

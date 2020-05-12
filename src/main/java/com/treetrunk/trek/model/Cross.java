@@ -9,7 +9,9 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -43,8 +45,8 @@ public class Cross extends AbstractEntity {
     private Set<Module> modules;
 
     @JsonView(Views.Cross.class)
-    @JoinColumn(name = "server_id")
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JoinColumn(name = "server_id", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     private Server server;
 
     public void setModules(Set<Module> modules) {
@@ -80,5 +82,11 @@ public class Cross extends AbstractEntity {
 
     public Server getServer() {
         return server;
+    }
+
+    public List<Long> getModulesId() {
+        List<Long> list = new ArrayList<>();
+        this.modules.forEach(m->list.add(m.getId()));
+        return list;
     }
 }

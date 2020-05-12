@@ -66,7 +66,7 @@ public class CrossValidator implements Validator {
         // Duplicate
         Long serverId = cross.getServer().getId();
         for (Cross duplicateCross : serverService.findById(serverId).getCrosses()) {
-            if (name.equals(duplicateCross.getName())) {
+            if (name.equals(duplicateCross.getName()) && !cross.getId().equals(duplicateCross.getId())) {
                 errors.rejectValue(validateField, messageService.getMessage("cross.name.inUse", null));
                 return;
             }

@@ -55,7 +55,7 @@ public class CrossController extends AbstractController<Cross, CrossService> {
 
     @JsonView(Views.Cross.class)
     @Override
-    public ResponseEntity<Cross> update(@PathVariable(name = "id") Long id, @RequestBody Cross customCross) {
+    public ResponseEntity<Cross> update(@PathVariable(name = "id") Long id, @RequestBody @Valid Cross customCross) {
         return super.update(id, customCross);
     }
 }

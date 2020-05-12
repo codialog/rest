@@ -44,8 +44,8 @@ public class Port extends AbstractEntity {
     @Column(name = "comment")
     private String comment;
 
-    @JoinColumn(name = "module_id")
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JoinColumn(name = "module_id", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     private Module module;
 
     public void setModule(Module module) {

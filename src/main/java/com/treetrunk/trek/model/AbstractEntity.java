@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.logging.Logger;
 
 @MappedSuperclass
 @Getter(AccessLevel.PUBLIC)
@@ -21,5 +22,13 @@ public abstract class AbstractEntity implements Serializable {
 
     public Long getId() {
         return id;
+    }
+
+    @PreUpdate
+    @PreRemove
+    private void preUpdateFunction(){
+        Logger logger = Logger.getLogger("Class AbstractEntity");
+        logger.info("Inside preUpdateFunction ....");
+        assert this.getId() == null;
     }
 }

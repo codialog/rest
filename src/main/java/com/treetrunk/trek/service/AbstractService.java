@@ -30,12 +30,14 @@ public abstract class AbstractService<E extends AbstractEntity, R extends Common
     }
 
     @Override
-    public E update(E entity, E customEntity) {
+    public E update(Long id, E customEntity) {
+        E entity = repository.getOne(id);
         BeanUtils.copyProperties(customEntity, entity, "id");
         return repository.save(entity);
     }
 
-    public E update(E entity, E customEntity, String[] ignoreProperties) {
+    public E update(Long id, E customEntity, String[] ignoreProperties) {
+        E entity = repository.getOne(id);
         BeanUtils.copyProperties(customEntity, entity, ignoreProperties);
         return repository.save(entity);
     }

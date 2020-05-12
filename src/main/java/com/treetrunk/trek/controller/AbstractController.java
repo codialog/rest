@@ -48,8 +48,7 @@ public abstract class AbstractController<E extends AbstractEntity, S extends Com
 
     public ResponseEntity<E> update(@PathVariable(name = "id") Long id, @RequestBody E customEntity) {
         logger.info("Inside update ....");
-        E entity = service.findById(id);
-        E updatedEntity = service.update(entity, customEntity);
+        E updatedEntity = service.update(id, customEntity);
         if (updatedEntity == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

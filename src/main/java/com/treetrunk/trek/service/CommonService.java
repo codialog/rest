@@ -12,7 +12,7 @@ public interface CommonService<E extends AbstractEntity> {
 
     E create(E entity);
 
-    E update(E updateEntity, E entity);
+    E update(Long id, E entity);
 
     void delete(Long id);
 }
