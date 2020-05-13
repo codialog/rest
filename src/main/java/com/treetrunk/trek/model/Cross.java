@@ -9,10 +9,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "crosses")
@@ -41,7 +38,9 @@ public class Cross extends AbstractEntity {
     private Integer amountModuleSlots;
 
     @JsonView(Views.Cross.class)
-    @OneToMany(mappedBy = "cross", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "cross",
+            fetch = FetchType.EAGER,
+            cascade={CascadeType.REMOVE, CascadeType.MERGE, CascadeType.PERSIST})
     private Set<Module> modules;
 
     @JsonView(Views.Cross.class)
@@ -88,5 +87,20 @@ public class Cross extends AbstractEntity {
         List<Long> list = new ArrayList<>();
         this.modules.forEach(m->list.add(m.getId()));
         return list;
+    }
+
+    public Module getModule(Long id){
+        return getModules().stream().filter(module -> module.getId().equals(id)).findFirst().orElse(null);
+    }
+
+    public void deleteModule(Long id) {
+        Iterator<Module> moduleIterator = getModules().iterator();
+        while(moduleIterator.hasNext()) {
+            Module nextModule = moduleIterator.next();
+            if (nextModule.getId().equals(id)) {
+                moduleIterator.remove();
+                break;
+            }
+        }
     }
 }

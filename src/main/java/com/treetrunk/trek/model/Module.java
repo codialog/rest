@@ -29,7 +29,9 @@ public class Module extends AbstractEntity {
     private Cross cross;
 
     @JsonView(Views.Cross.class)
-    @OneToMany(mappedBy = "module", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "module",
+            fetch = FetchType.EAGER,
+            cascade = {CascadeType.REMOVE, CascadeType.MERGE, CascadeType.PERSIST})
     private Set<Port> ports;
 
     public void setCross(Cross cross) {
@@ -63,9 +65,21 @@ public class Module extends AbstractEntity {
         return this.amountPortSlots - this.ports.size();
     }
 
-    public List<Long> getPortsId(){
+    public List<Long> getPortsId() {
         List<Long> list = new ArrayList<>();
-        this.ports.forEach(p->list.add(p.getId()));
+        this.ports.forEach(p -> list.add(p.getId()));
         return list;
+    }
+
+    public Port getPort(Long id) {
+        return getPorts().stream().filter(port -> port.getId().equals(id)).findFirst().orElse(null);
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    public void setAmountPortSlots(int amountPortSlots) {
+        this.amountPortSlots = amountPortSlots;
     }
 }

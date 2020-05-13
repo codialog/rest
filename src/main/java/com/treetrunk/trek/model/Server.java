@@ -24,7 +24,9 @@ public class Server extends AbstractEntity {
     private String address;
 
     @JsonView(Views.Server.class)
-    @OneToMany(mappedBy = "server", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "server",
+            fetch = FetchType.EAGER,
+            cascade = {CascadeType.REMOVE, CascadeType.MERGE})
     private Set<Cross> crosses;
 
     public String getName() {

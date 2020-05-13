@@ -20,6 +20,4 @@ public class CrossEventListener extends AbstractRepositoryEventListener<Cross> {
     public void onAfterDelete(Cross cross) {
         logger.info("Inside  onAfterDelete ....");
     }
-
-
 }

@@ -60,7 +60,7 @@ public class ServersValidator implements Validator {
         }
         // Duplicate
         Server duplicatedServer = serverService.findByName(name);
-        if (duplicatedServer != null && !server.getId().equals(duplicatedServer.getId())) {
+        if (duplicatedServer != null && server.getId() == null || !server.getId().equals(duplicatedServer.getId())) {
             errors.rejectValue(validateField, messageService.getMessage("server.name.inUse", null));
         }
     }

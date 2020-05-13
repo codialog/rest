@@ -59,4 +59,60 @@ public class Port extends AbstractEntity {
     public Module getModule() {
         return module;
     }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public String getEndPoint() {
+        return endPoint;
+    }
+
+    public void setEndPoint(String endPoint) {
+        this.endPoint = endPoint;
+    }
+
+    public Port getTransitPort() {
+        return transitPort;
+    }
+
+    public void setTransitPort(Port transitPort) {
+        this.transitPort = transitPort;
+    }
+
+    public Port getCrossPort() {
+        return crossPort;
+    }
+
+    public void setCrossPort(Port crossPort) {
+        this.crossPort = crossPort;
+    }
+
+    public String getService() {
+        return service;
+    }
+
+    public void setService(String service) {
+        this.service = service;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public void deleteLinks() {
+        setCrossPort(null);
+    }
 }
