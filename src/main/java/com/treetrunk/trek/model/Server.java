@@ -29,6 +29,14 @@ public class Server extends AbstractEntity {
             cascade = {CascadeType.REMOVE, CascadeType.MERGE})
     private Set<Cross> crosses;
 
+    public Server() {
+    }
+
+    public Server(String name, String address) {
+        this.name = name;
+        this.address = address;
+    }
+
     public String getName() {
         return name;
     }

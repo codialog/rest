@@ -29,6 +29,6 @@ public abstract class AbstractEntity implements Serializable {
     private void preUpdateFunction(){
         Logger logger = Logger.getLogger("Class AbstractEntity");
         logger.info("Inside preUpdateFunction ....");
-        assert this.getId() == null;
+        assert this.getId() != null;
     }
 }

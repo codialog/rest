@@ -47,20 +47,20 @@ public class ServersValidator implements Validator {
         }
         // Length
         int maxLengthName = 100;
-        int minLengthName = 2;
+        int minLengthName = 1;
         int serverNameLength = name.length();
         if (serverNameLength > maxLengthName) {
             errors.rejectValue(validateField,
                     messageService.getMessage("server.name.maxSize", new Object[]{maxLengthName}));
             return;
-        } else if (serverNameLength < minLengthName) {
+        } else if (serverNameLength <= minLengthName) {
             errors.rejectValue(validateField,
                     messageService.getMessage("server.name.minSize", new Object[]{minLengthName}));
             return;
         }
         // Duplicate
         Server duplicatedServer = serverService.findByName(name);
-        if (duplicatedServer != null && server.getId() == null || !server.getId().equals(duplicatedServer.getId())) {
+        if (duplicatedServer != null && server.getAddress().equals(duplicatedServer.getAddress())) {
             errors.rejectValue(validateField, messageService.getMessage("server.name.inUse", null));
         }
     }
