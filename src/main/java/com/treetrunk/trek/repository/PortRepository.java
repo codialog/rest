@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PortRepository extends CommonRepository<Port> {
 
-    Server findByNumber(int name);
+    Server findByNumber(int number);
 }

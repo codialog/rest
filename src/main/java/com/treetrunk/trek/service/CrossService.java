@@ -7,7 +7,6 @@ import com.treetrunk.trek.repository.CrossRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -26,28 +25,23 @@ public class CrossService extends AbstractService<Cross, CrossRepository> {
     @Override
     public Cross update(Long id, Cross customCross) {
         Cross cross = repository.getOne(id);
-        List<Long> modulesId = cross.getModulesId();
         List<Long> customModulesId = customCross.getModulesId();
-        for (Long moduleId : modulesId) {
+        for (Long moduleId : cross.getModulesId()) {
             if (!customModulesId.contains(moduleId)) {
                 moduleService.delete(moduleId);
-                cross.getModule(moduleId);
-            }
-        }
-        List<Long> portsId = new ArrayList<>();
-        List<Long> customPortsId = new ArrayList<>();
-        for (Module module : cross.getModules()) {
-            portsId = module.getPortsId();
-            customPortsId = customCross.getModule(module.getId()).getPortsId();
-            for (Long portId : portsId) {
-                if (!customPortsId.contains(portId)) {
-                    Port port = module.getPort(portId);
-                    Port crossPort = port.getCrossPort();
-                    if (crossPort != null) {
-                        crossPort.deleteLinks();
-                        portService.update(crossPort.getId(), crossPort);
+                cross.deleteModule(moduleId);
+            } else {
+                Module module = cross.getModuleById(moduleId);
+                List<Long> customPortsId = customCross.getModuleById(module.getId()).getPortsId();
+                for (Long portId : module.getPortsId()) {
+                    if (!customPortsId.contains(portId)) {
+                        Port crossPort = module.getPort(portId).getCrossPort();
+                        if (crossPort != null) {
+                            crossPort.deleteLinks();
+                            portService.update(crossPort.getId(), crossPort);
+                        }
+                        portService.delete(portId);
                     }
-                    portService.delete(portId);
                 }
             }
         }

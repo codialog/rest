@@ -40,13 +40,32 @@ public class Cross extends AbstractEntity {
     @JsonView(Views.Cross.class)
     @OneToMany(mappedBy = "cross",
             fetch = FetchType.EAGER,
-            cascade={CascadeType.REMOVE, CascadeType.MERGE, CascadeType.PERSIST})
+            cascade = {CascadeType.REMOVE, CascadeType.MERGE, CascadeType.PERSIST})
     private Set<Module> modules;
 
     @JsonView(Views.Cross.class)
     @JoinColumn(name = "server_id", nullable = false)
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     private Server server;
+
+    public Cross() {
+    }
+
+    public Cross(String name,
+                 Integer amountModuleSlots,
+                 Set<Module> modules,
+                 Server server) {
+        this.name = name;
+        this.amountModuleSlots = amountModuleSlots;
+        this.modules = modules;
+        this.server = server;
+        for (Module module : this.modules) {
+            module.setCross(this);
+            for (Port port : module.getPorts()) {
+                port.setModule(module);
+            }
+        }
+    }
 
     public void setModules(Set<Module> modules) {
         this.modules = modules;
@@ -71,7 +90,7 @@ public class Cross extends AbstractEntity {
         return amountModuleSlots;
     }
 
-    public int getEmptyModuleSlots() {
+    public Integer getEmptyModuleSlots() {
         return this.amountModuleSlots - this.modules.size();
     }
 
@@ -85,22 +104,56 @@ public class Cross extends AbstractEntity {
 
     public List<Long> getModulesId() {
         List<Long> list = new ArrayList<>();
-        this.modules.forEach(m->list.add(m.getId()));
+        this.modules
+                .stream()
+                .filter(m -> m.getId() != null)
+                .forEach(m -> list.add(m.getId()));
         return list;
     }
 
-    public Module getModule(Long id){
-        return getModules().stream().filter(module -> module.getId().equals(id)).findFirst().orElse(null);
+    public Module getModuleById(Long id) {
+        for (Module module : getModules()) {
+            if (module.getId() != null && module.getId().equals(id)) {
+                return module;
+            }
+        }
+        return null;
     }
 
     public void deleteModule(Long id) {
         Iterator<Module> moduleIterator = getModules().iterator();
-        while(moduleIterator.hasNext()) {
+        while (moduleIterator.hasNext()) {
             Module nextModule = moduleIterator.next();
             if (nextModule.getId().equals(id)) {
                 moduleIterator.remove();
                 break;
             }
         }
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public void setUpdated(Date updated) {
+        this.updated = updated;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAmountModuleSlots(Integer amountModuleSlots) {
+        this.amountModuleSlots = amountModuleSlots;
+    }
+
+    public void setServer(Server server) {
+        this.server = server;
+    }
+
+    public void addModule(Module module) {
+        Set<Module> modules = getModules();
+        module.setCross(this);
+        modules.add(module);
     }
 }

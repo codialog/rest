@@ -36,9 +36,15 @@ public class ModuleValidator implements Validator {
     }
 
     public void validateModuleNumber(Module module, Errors errors) {
-        //Length
-        if (module.getNumber() < 0) {
-            errors.rejectValue("number", messageService.getMessage("module.number.positive", null));
+        String validateField = "modules";
+        // Empty
+        if (module.getNumber() == null) {
+            errors.rejectValue(validateField, messageService.getMessage("module.number.notNull", null));
+        } else if (module.getNumber() < 0) {
+            errors.rejectValue(validateField, messageService.getMessage("module.number.positive", null));
+        } else if (module.getNumber() > module.getCross().getAmountModuleSlots()) {
+            errors.rejectValue(validateField,
+                    messageService.getMessage("module.number.limit", new Object[]{module.getCross().getAmountModuleSlots()}));
         }
     }
 
@@ -61,8 +67,16 @@ public class ModuleValidator implements Validator {
                     messageService.getMessage("port.number.inUse", new Object[]{module.getNumber()}));
         }
         //Number
-        if (portNumbers.stream().anyMatch(n -> n < 0)) {
-            errors.rejectValue(validateField, messageService.getMessage("port.number.positive", null));
-        }
+        //Empty
+        portNumbers.forEach(n -> {
+            if (n == null) {
+                errors.rejectValue(validateField,
+                        messageService.getMessage("port.number.notNull", null));
+            } else if (n < 0) {
+                errors.rejectValue(validateField, messageService.getMessage("port.number.positive", null));
+            } else if (n > module.getAmountPortSlots()) {
+                errors.rejectValue(validateField, messageService.getMessage("port.number.limit", new Object[]{module.getAmountPortSlots()}));
+            }
+        });
     }
 }

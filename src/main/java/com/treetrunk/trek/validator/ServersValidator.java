@@ -46,9 +46,9 @@ public class ServersValidator implements Validator {
             return;
         }
         // Length
-        int maxLengthName = 100;
-        int minLengthName = 1;
-        int serverNameLength = name.length();
+        Integer maxLengthName = 100;
+        Integer minLengthName = 1;
+        Integer serverNameLength = name.length();
         if (serverNameLength > maxLengthName) {
             errors.rejectValue(validateField,
                     messageService.getMessage("server.name.maxSize", new Object[]{maxLengthName}));

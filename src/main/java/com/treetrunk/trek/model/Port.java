@@ -15,7 +15,7 @@ public class Port extends AbstractEntity {
 
     @JsonView(Views.Common.class)
     @Column(name = "number")
-    private int number;
+    private Integer number;
 
     @JsonView(Views.Common.class)
     @Enumerated(EnumType.STRING)
@@ -48,11 +48,32 @@ public class Port extends AbstractEntity {
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     private Module module;
 
+    public Port() {
+    }
+
+    public Port(Integer number,
+                Status status,
+                String endPoint,
+                Port transitPort,
+                Port crossPort,
+                String service,
+                String comment,
+                Module module) {
+        this.number = number;
+        this.status = status;
+        this.endPoint = endPoint;
+        this.transitPort = transitPort;
+        this.crossPort = crossPort;
+        this.service = service;
+        this.comment = comment;
+        this.module = module;
+    }
+
     public void setModule(Module module) {
         this.module = module;
     }
 
-    public int getNumber() {
+    public Integer getNumber() {
         return number;
     }
 
@@ -60,7 +81,7 @@ public class Port extends AbstractEntity {
         return module;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(Integer number) {
         this.number = number;
     }
 

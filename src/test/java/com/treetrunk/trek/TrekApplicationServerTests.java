@@ -48,26 +48,32 @@ class TrekApplicationServerTests {
 
     @Test
     void createServer() throws Exception {
-        this.mockMvc.perform(post(testUrl + serverApi)
-                .contentType(APPLICATION_JSON)
-                .content(String.valueOf(new JSONObject()
-                        .put(nameField, serverName)
-                        .put(addressField, serverAddress)))
-                .accept(APPLICATION_JSON))
-                .andDo(print())
-                .andExpect(status().is2xxSuccessful());
-        serverService.delete(serverService.findByName(serverName).getId());
+        try {
+            this.mockMvc.perform(post(testUrl + serverApi)
+                    .contentType(APPLICATION_JSON)
+                    .content(String.valueOf(new JSONObject()
+                            .put(nameField, serverName)
+                            .put(addressField, serverAddress)))
+                    .accept(APPLICATION_JSON))
+                    .andDo(print())
+                    .andExpect(status().is2xxSuccessful());
+        } finally {
+            serverService.delete(serverService.findByName(serverName).getId());
+        }
     }
 
     @Test
     void selectServer() throws Exception {
         Server server = serverService.create(new Server(serverName, serverAddress));
-        this.mockMvc.perform(get(testUrl + serverApi + "/" + server.getId()))
-                .andDo(print())
-                .andExpect(status().is3xxRedirection())
-                .andExpect(content().string(containsString(String.valueOf(serverName))))
-                .andExpect(content().string(containsString(String.valueOf(serverAddress))));
-        serverService.delete(server.getId());
+        try {
+            this.mockMvc.perform(get(testUrl + serverApi + "/" + server.getId()))
+                    .andDo(print())
+                    .andExpect(status().is3xxRedirection())
+                    .andExpect(content().string(containsString(String.valueOf(serverName))))
+                    .andExpect(content().string(containsString(String.valueOf(serverAddress))));
+        } finally {
+            serverService.delete(server.getId());
+        }
     }
 
     @Test
@@ -75,32 +81,38 @@ class TrekApplicationServerTests {
         String updateName = "test_server_name";
         String updateAddress = "test_server_address";
         Server server = serverService.create(new Server(serverName, serverAddress));
-        this.mockMvc.perform(put(testUrl + serverApi + "/{id}", server.getId())
-                .contentType(APPLICATION_JSON)
-                .content(String.valueOf(new JSONObject()
-                        .put(idField, server.getId())
-                        .put(nameField, updateName)
-                        .put(addressField, updateAddress)))
-                .accept(APPLICATION_JSON))
-                .andDo(print())
-                .andExpect(status().is2xxSuccessful());
-        serverService.delete(server.getId());
+        try {
+            this.mockMvc.perform(put(testUrl + serverApi + "/{id}", server.getId())
+                    .contentType(APPLICATION_JSON)
+                    .content(String.valueOf(new JSONObject()
+                            .put(idField, server.getId())
+                            .put(nameField, updateName)
+                            .put(addressField, updateAddress)))
+                    .accept(APPLICATION_JSON))
+                    .andDo(print())
+                    .andExpect(status().is2xxSuccessful());
+        } finally {
+            serverService.delete(server.getId());
+        }
     }
 
     @Test
     void validateDuplicateServerName() throws Exception {
         Server server = serverService.create(new Server(serverName, serverAddress));
-        this.mockMvc.perform(post(testUrl + serverApi)
-                .contentType(APPLICATION_JSON)
-                .content(String.valueOf(new JSONObject()
-                        .put(nameField, serverName)
-                        .put(addressField, serverAddress)))
-                .accept(APPLICATION_JSON))
-                .andDo(print())
-                .andExpect(status().is4xxClientError())
-                .andExpect(content().string(containsString(String.valueOf
-                        (messageService.getMessage("server.name.inUse", null)))));
-        serverService.delete(server.getId());
+        try {
+            this.mockMvc.perform(post(testUrl + serverApi)
+                    .contentType(APPLICATION_JSON)
+                    .content(String.valueOf(new JSONObject()
+                            .put(nameField, serverName)
+                            .put(addressField, serverAddress)))
+                    .accept(APPLICATION_JSON))
+                    .andDo(print())
+                    .andExpect(status().is4xxClientError())
+                    .andExpect(content().string(containsString(String.valueOf
+                            (messageService.getMessage("server.name.inUse", null)))));
+        } finally {
+            serverService.delete(server.getId());
+        }
     }
 
     @Test
@@ -119,13 +131,13 @@ class TrekApplicationServerTests {
 
     @Test
     void validateMaxLengthServerName() throws Exception {
-        String maxLengthName = "";
-        int length = 100;
-        while (maxLengthName.length() <= length) maxLengthName += "tes";
+        StringBuilder maxLengthName = new StringBuilder();
+        Integer length = 100;
+        while (maxLengthName.length() <= length) maxLengthName.append("tes");
         this.mockMvc.perform(post(testUrl + serverApi)
                 .contentType(APPLICATION_JSON)
                 .content(String.valueOf(new JSONObject()
-                        .put(nameField, maxLengthName)
+                        .put(nameField, maxLengthName.toString())
                         .put(addressField, serverAddress)))
                 .accept(APPLICATION_JSON))
                 .andDo(print())
@@ -137,7 +149,7 @@ class TrekApplicationServerTests {
     @Test
     void validateMinLengthServerName() throws Exception {
         String minLengthName = "j";
-        int length = 1;
+        Integer length = 1;
         this.mockMvc.perform(post(testUrl + serverApi)
                 .contentType(APPLICATION_JSON)
                 .content(String.valueOf(new JSONObject()
@@ -153,9 +165,14 @@ class TrekApplicationServerTests {
     @Test
     void deleteServer() throws Exception {
         Server server = serverService.create(new Server(serverName, serverAddress));
-        this.mockMvc.perform(MockMvcRequestBuilders
-                .delete(testUrl + serverApi + "/" + server.getId())
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+        try {
+            this.mockMvc.perform(MockMvcRequestBuilders
+                    .delete(testUrl + serverApi + "/" + server.getId())
+                    .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk());
+        } catch (Exception e) {
+            serverService.delete(server.getId());
+            throw e;
+        }
     }
 }

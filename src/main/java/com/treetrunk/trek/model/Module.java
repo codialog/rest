@@ -18,21 +18,35 @@ public class Module extends AbstractEntity {
 
     @JsonView(Views.Common.class)
     @Column(name = "number")
-    private int number;
+    private Integer number;
 
     @JsonView(Views.Common.class)
     @Column(name = "amount_port_slots")
-    private int amountPortSlots;
-
-    @JoinColumn(name = "cross_id", nullable = false)
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    private Cross cross;
+    private Integer amountPortSlots;
 
     @JsonView(Views.Cross.class)
     @OneToMany(mappedBy = "module",
             fetch = FetchType.EAGER,
             cascade = {CascadeType.REMOVE, CascadeType.MERGE, CascadeType.PERSIST})
     private Set<Port> ports;
+
+    @JoinColumn(name = "cross_id", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    private Cross cross;
+
+    public Module() {
+    }
+
+    public Module(Integer number,
+                  Integer amountPortSlots,
+                  Set<Port> ports,
+                  Cross cross) {
+        this.number = number;
+        this.amountPortSlots = amountPortSlots;
+        this.ports = ports;
+        this.cross = cross;
+
+    }
 
     public void setCross(Cross cross) {
         this.cross = cross;
@@ -45,11 +59,11 @@ public class Module extends AbstractEntity {
         }
     }
 
-    public int getNumber() {
+    public Integer getNumber() {
         return number;
     }
 
-    public int getAmountPortSlots() {
+    public Integer getAmountPortSlots() {
         return amountPortSlots;
     }
 
@@ -61,13 +75,16 @@ public class Module extends AbstractEntity {
         return ports;
     }
 
-    public int getEmptyPortSlots() {
+    public Integer getEmptyPortSlots() {
         return this.amountPortSlots - this.ports.size();
     }
 
     public List<Long> getPortsId() {
         List<Long> list = new ArrayList<>();
-        this.ports.forEach(p -> list.add(p.getId()));
+        this.ports
+                .stream()
+                .filter(p -> p.getId() != null)
+                .forEach(p -> list.add(p.getId()));
         return list;
     }
 
@@ -75,11 +92,17 @@ public class Module extends AbstractEntity {
         return getPorts().stream().filter(port -> port.getId().equals(id)).findFirst().orElse(null);
     }
 
-    public void setNumber(int number) {
+    public void setNumber(Integer number) {
         this.number = number;
     }
 
-    public void setAmountPortSlots(int amountPortSlots) {
+    public void setAmountPortSlots(Integer amountPortSlots) {
         this.amountPortSlots = amountPortSlots;
+    }
+
+    public void addPort(Port port) {
+        Set<Port> ports = getPorts();
+        port.setModule(this);
+        ports.add(port);
     }
 }

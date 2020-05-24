@@ -53,9 +53,9 @@ public class CrossValidator implements Validator {
             return;
         }
         // Length
-        int maxLengthName = 50;
-        int minLengthName = 2;
-        int crossNameLength = name.length();
+        Integer maxLengthName = 50;
+        Integer minLengthName = 2;
+        Integer crossNameLength = name.length();
         if (crossNameLength > maxLengthName) {
             errors.rejectValue(validateField, messageService.getMessage("cross.name.maxSize", new Object[]{maxLengthName}));
             return;
